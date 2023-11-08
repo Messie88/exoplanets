@@ -33,20 +33,14 @@ const loadPlanetsData = () => {
   });
 }
 
-//                                                       find all but exclude __v and _id params
 const getAllHabitablePlanets = async () => await planets.find({}, { '__v': 0, '_id': 0 });
 
 async function savePlanet(planet) {
   try {
-    // habitablePlanets.push(planet);
-    // TODO: Replace below create with  insert + update = upsert to save our planets only once when the server reloads, that way our planet will be added only if it doesn't exist in ou DB
-    // await planets.create({
-    //   keplerName: planet.kepler_name,
-    // });
     await planets.updateOne({
-      keplerName: planet.kepler_name, // find data, if it doesn't exist add it
+      keplerName: planet.kepler_name,
     }, {
-      keplerName: planet.kepler_name, // if it already exist update with the new value
+      keplerName: planet.kepler_name,
     }, {
       upsert: true,
     });
